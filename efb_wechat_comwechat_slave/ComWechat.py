@@ -87,6 +87,7 @@ class ComWeChatChannel(SlaveChannel):
         self.wxid = self.bot.GetSelfInfo()["data"]["wxId"]
         self.base_path = self.config["base_path"] if "base_path" in self.config else self.bot.get_base_path()
         self.dir = self.config["dir"]
+        self.replace_emoticon = self.config["replace_emoticon"]
         if not self.dir.endswith(os.path.sep):
             self.dir += os.path.sep
         ChatMgr.slave_channel = self
