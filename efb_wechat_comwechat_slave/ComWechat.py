@@ -462,13 +462,14 @@ class ComWeChatChannel(SlaveChannel):
         self.send_efb_msgs(msg, uid=int(time.time()), chat=chat, author=author, type=MsgType.Text)
 
     def handle_msg(self , msg : Dict[str, Any] , author : 'ChatMember' , chat : 'Chat'):
-        if self.replace_emoticon:
-            emojiList = re.findall('\[[\w|！|!| ]+\]' , msg["message"])
-            for emoji in emojiList:
-                try:
-                    msg["message"] = msg["message"].replace(emoji, WC_EMOTICON_CONVERSION[emoji])
-                except:
-                    pass
+        if hasattr(self, "replace_emoticon"):
+            if self.replace_emoticon:
+                emojiList = re.findall('\[[\w|！|!| ]+\]' , msg["message"])
+                for emoji in emojiList:
+                    try:
+                        msg["message"] = msg["message"].replace(emoji, WC_EMOTICON_CONVERSION[emoji])
+                    except:
+                        pass
 
         if msg["msgid"] not in self.cache:
             self.cache[msg["msgid"]] = msg["type"]
